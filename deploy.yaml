@@ -37,3 +37,17 @@
     - name: Reload systemd
       shell: systemctl daemon-reload
       become: yes
+
+    - name: Allow ports
+      ufw:
+        rule: allow
+        port: "{{ item.port }}"
+        proto: any
+      become: yes
+      with_items: '{{ servers }}'
+
+    - name: Reload Firewall and enable at boot
+      ufw:
+        state: enabled
+        policy: deny
+      become: yes
