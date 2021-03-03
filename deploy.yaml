@@ -41,7 +41,7 @@
     - name: Allow server connect ports
       ufw:
         rule: allow
-        port: "{{ item.port + 1 }}"
+        port: "{{ item.port }}"
         proto: any
       become: yes
       with_items: '{{ servers }}'
