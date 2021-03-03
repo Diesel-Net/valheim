@@ -1,0 +1,16 @@
+# ansible-playbook deploy.yaml -i inventories/dev/hosts --vault-id ~/.tokens/master_id
+
+- hosts: all
+  strategy: free
+  roles:
+    - ubuntu_base
+
+  tasks:
+
+    - name: "Install Steam CMD"
+      shell: >
+        add-apt-repository multiverse
+        dpkg --add-architecture i386
+        apt update
+        apt install lib32gcc1 steamcmd
+      become: yes
