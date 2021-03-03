@@ -38,24 +38,10 @@
       shell: systemctl daemon-reload
       become: yes
 
-    - name: Allow port 2457 (steam discovery?)
-      ufw:
-        rule: allow
-        port: '2457'
-        proto: any
-      become: yes
-
-    - name: Allow port 2458 (another required port?)
-      ufw:
-        rule: allow
-        port: '2458'
-        proto: any
-      become: yes
-
     - name: Allow server connect ports
       ufw:
         rule: allow
-        port: "{{ item.port }}"
+        port: "{{ item.port + 1 }}"
         proto: any
       become: yes
       with_items: '{{ servers }}'
