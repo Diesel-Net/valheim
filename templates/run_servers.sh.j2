@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+export templdpath=$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=./linux64:$LD_LIBRARY_PATH
+export SteamAppId=892970
+
 echo "Starting server PRESS CTRL-C to exit"
 
 /usr/games/steamcmd +login anonymous +force_install_dir {{ install_dir }} +app_update {{ steam_game_id }} +quit
@@ -9,6 +13,8 @@ echo "Starting server PRESS CTRL-C to exit"
 {% for server in servers %}
 ./valheim_server.x86_64 -name "{{ server.name }}" -port {{ server.port - 1 }} -nographics -world "{{ server.name }}" -password "{{ server.password }}" > /dev/null &
 {% endfor %}
+
+export LD_LIBRARY_PATH=$templdpath
 
 while :
 do
