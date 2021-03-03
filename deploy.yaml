@@ -21,30 +21,40 @@
         state: directory
         mode: '0755'
 
-    - name: Render start_server.sh.j2 to {{ install_dir }}/start_server.sh
+    - name: Render start_server.sh.j2 to {{ install_dir }}/start_server_XXXX.sh
       template:
         src: start_server.sh.j2
-        dest: "{{ install_dir }}/start_server_{{ item.name}}.sh"
+        dest: '{{ install_dir }}/start_server_{{ item.name }}.sh'
         mode: u=rwx,g=rwx,o=rx
       vars:
         server: '{{ item }}'
       with_items: '{{ servers }}'
       loop_control:
-        label: "{{ item.name }}"
+        label: 'start_server_{{ item.name }}.sh'
 
-    - name: Render valheim.service to /etc/systemd/system/valheim.service
+    - name: Render valheim.service.j2 to /etc/systemd/system/valheim_XXXX.service
       template:
         src: valheim.service.j2
-        dest: /etc/systemd/system/valheim.service
+        dest: /etc/systemd/system/valheim_{{ item.name }}.service
         mode: u=rwx,g=rwx,o=rx
+      vars:
+        server: '{{ item }}'
+      with_items: '{{ servers }}'
+      loop_contol:
+        label: '{{ item.name }}'
       become: yes
 
     - name: Reload systemd
       shell: systemctl daemon-reload
       become: yes
 
-    - name: Start the service
+    - name: Start each service
       shell: systemctl start valheim
+      vars:
+        server: '{{ item }}'
+      with_items: '{{ servers }}'
+      loop_contol:
+        label: '{{ item.name }}'
       become: yes
 
     - name: Allow server ports
@@ -52,16 +62,20 @@
         rule: allow
         port: "{{ item.port }}"
         proto: any
-      become: yes
       with_items: '{{ servers }}'
+      loop_contol:
+        label: '{{ item.port }}'
+      become: yes
 
     - name: Allow server ports +1
       ufw:
         rule: allow
         port: "{{ item.port + 1 }}"
         proto: any
-      become: yes
       with_items: '{{ servers }}'
+      loop_contol:
+        label: '{{ item.port + 1 }}'
+      become: yes
 
     - name: Reload Firewall and enable at boot
       ufw:
