@@ -21,11 +21,16 @@
         state: directory
         mode: '0755'
 
-    - name: Render run_servers.sh scrip to {{ install_dir }}/run_servers.sh
+    - name: Render start_server.sh.j2 to {{ install_dir }}/start_server.sh
       template:
-        src: run_servers.sh.j2
-        dest: "{{ install_dir }}/run_servers.sh"
+        src: start_server.sh.j2
+        dest: "{{ install_dir }}/start_server_{{ item.name}}.sh"
         mode: u=rwx,g=rwx,o=rx
+      vars:
+        server: '{{ item }}'
+      with_items: '{{ servers }}'
+      loop_control:
+        label: "{{ item.name }}"
 
     - name: Render valheim.service to /etc/systemd/system/valheim.service
       template:
@@ -38,10 +43,22 @@
       shell: systemctl daemon-reload
       become: yes
 
-    - name: Allow server connect ports
+    - name: Start the service
+      shell: systemctl start valheim
+      become: yes
+
+    - name: Allow server ports
       ufw:
         rule: allow
         port: "{{ item.port }}"
+        proto: any
+      become: yes
+      with_items: '{{ servers }}'
+
+    - name: Allow server ports +1
+      ufw:
+        rule: allow
+        port: "{{ item.port + 1 }}"
         proto: any
       become: yes
       with_items: '{{ servers }}'
