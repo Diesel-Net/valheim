@@ -1,0 +1,15 @@
+[Unit]
+Description=Valheim service
+Wants=network.target
+After=syslog.target network-online.target
+
+[Service]
+Type=simple
+Restart=on-failure
+RestartSec=10
+User=automation
+WorkingDirectory={{ install_dir }}
+ExecStart={{ install_dir }}/run_servers.sh
+
+[Install]
+WantedBy=multi-user.target

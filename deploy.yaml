@@ -7,10 +7,28 @@
 
   tasks:
 
-    - name: "Install Steam CMD"
+    - name: Install SteamCMD
       shell: >
         add-apt-repository multiverse &&
         dpkg --add-architecture i386 &&
         apt update &&
         apt install lib32gcc1 steamcmd
       become: yes
+
+    - name: Create installation directory {{ install_dir }}
+      file:
+        path: '{{ install_dir }}'
+        state: directory
+        mode: '0755'
+
+    - name: Render run_servers.sh scrip to {{ install_dir }}/run_servers.sh
+      template:
+        src: run_servers.sh.j2
+        dest: "{{ install_dir }}/run_servers.sh"
+        mode: u=rwx,g=rwx,o=rx
+
+    - name: Render valheim.service to /etc/systemd/system/valheim.service
+      template:
+        src: valheim.service.j2
+        dest: /etc/systemd/system/valheim.service
+        mode: u=rwx,g=rwx,o=rx
