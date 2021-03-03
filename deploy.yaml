@@ -49,7 +49,7 @@
       become: yes
 
     - name: Start each service
-      shell: systemctl start valheim
+      shell: systemctl start valheim_{{ item.name }}
       vars:
         server: '{{ item }}'
       with_items: '{{ servers }}'
@@ -81,4 +81,13 @@
       ufw:
         state: enabled
         policy: deny
+      become: yes
+
+    - name: Enable each service to start at boot
+      shell: systemctl enable valheim_{{ item.name }}
+      vars:
+        server: '{{ item }}'
+      with_items: '{{ servers }}'
+      loop_control:
+        label: '{{ item.name }}'
       become: yes
