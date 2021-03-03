@@ -33,3 +33,7 @@
         dest: /etc/systemd/system/valheim.service
         mode: u=rwx,g=rwx,o=rx
       become: yes
+
+    - name: Reload systemd
+      shell: systemctl daemon-reload
+      become: yes
