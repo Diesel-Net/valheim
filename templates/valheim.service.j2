@@ -9,7 +9,7 @@ Restart=on-failure
 RestartSec=10
 User=automation
 WorkingDirectory={{ install_dir }}
-ExecStart={{ install_dir }}/run_servers.sh
+ExecStart={{ install_dir }}/start_server_{{ server.name }}.sh
 
 [Install]
 WantedBy=multi-user.target
