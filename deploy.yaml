@@ -9,8 +9,8 @@
 
     - name: "Install Steam CMD"
       shell: >
-        add-apt-repository multiverse
-        dpkg --add-architecture i386
-        apt update
+        add-apt-repository multiverse &&
+        dpkg --add-architecture i386 &&
+        apt update &&
         apt install lib32gcc1 steamcmd
       become: yes
