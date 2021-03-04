@@ -11,7 +11,8 @@ servers:
     public: no
     auto_update: yes
     auto_update_schedule: "30 5 * * *"
-    admins: []
+    admins: 
+      - '76561198011336370' # softtacowithbeef
     banned: []
     permitted: []
     password: !vault |
@@ -29,7 +30,8 @@ servers:
     public: no
     auto_update: yes
     auto_update_schedule: "30 5 * * *"
-    admins: []
+    admins:
+      - '76561197994970408' # ler
     banned: []
     permitted: []
     password: !vault |
