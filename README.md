@@ -1,8 +1,11 @@
 # valheim
-Valheim Dedicated Game Server
+Valheim Dedicated Game Server. Fully automated configuration and deployment of multiple valheim servers on docker swarm.
 
-# Guides
-- https://gameplay.tips/guides/9765-valheim.html
-- https://valheim.fandom.com/wiki/Valheim_Dedicated_Server#:~:text=$HOME/.config/unity3d,Dedicated.
+## Requirements
+- Ansible 2.10+
 
-World save location: `~/.config/unity3d/IronGate/Valheim/worlds`
+## Deploy
+Right now each environment is defined as an independent Virtual Machine (single-node swarm leaders)
+```bash
+ansible-playbook deploy.yaml -i inventories/prod/hosts --vault-id ~/.tokens/master_id
+```
