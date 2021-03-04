@@ -6,6 +6,7 @@ guid: 1001
 servers:
 
   - name: TacoTimeNW
+    world: Dedicated
     port: 2456
     public: no
     auto_update: yes
@@ -21,8 +22,9 @@ servers:
       6637393439613937370a643836313630393535636565373363663461326532386364386634653461
       30323964386364333730616339366336353730353935326631643865653134396139
     
-    
+
   - name: Lerland
+    world: Lerland
     port: 2459
     public: no
     auto_update: yes
