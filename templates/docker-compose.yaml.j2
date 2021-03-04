@@ -22,13 +22,12 @@ services:
       - AUTO_UPDATE_SCHEDULE="{{ auto_update_schedule }}"
       # Note: backups set up externally with hypervisor
     volumes:
-      - {{ directories_files }}/saves:/home/steam/.config/unity3d/IronGate/Valheim
-      - {{ directories_files }}/server:/home/steam/valheim
+      - {{ directories_files }}/{{ server.name }}/saves:/home/steam/.config/unity3d/IronGate/Valheim
+      - {{ directories_files }}/{{ server.name }}/server:/home/steam/valheim
     networks:
       - {{ docker_network }}
 
 {% endfor %}
-
 
 networks:
   {{ docker_network }}:

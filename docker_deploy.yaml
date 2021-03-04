@@ -1,0 +1,48 @@
+# ansible-playbook deploy.yaml -i inventories/dev/hosts --vault-id ~/.tokens/master_id
+
+- hosts: all
+  strategy: free
+  roles:
+    - ubuntu_base
+    - docker_host
+
+  tasks:
+
+    - name: Create all the save directories
+      file:
+        path: '{{ directories_files }}/{{ server.name }}'
+        state: directory
+        mode: '0755'
+        owner: automation
+        group: automation
+      vars:
+        server: '{{ item }}'
+      with_items: '{{ servers }}'
+      loop_control:
+        label: '{{ directories_files }}/{{ item.name }}/saves'
+
+    - name: Allow server ports
+      ufw:
+        rule: allow
+        port: "{{ item.port }}"
+        proto: any
+      with_items: '{{ servers }}'
+      loop_control:
+        label: '{{ item.port }}'
+      become: yes
+
+    - name: Allow server ports +1
+      ufw:
+        rule: allow
+        port: "{{ item.port + 1 }}"
+        proto: any
+      with_items: '{{ servers }}'
+      loop_control:
+        label: '{{ item.port + 1 }}'
+      become: yes
+
+    - name: Reload Firewall and enable at boot
+      ufw:
+        state: enabled
+        policy: deny
+      become: yes

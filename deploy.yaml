@@ -4,7 +4,6 @@
   strategy: free
   roles:
     - ubuntu_base
-    - docker_host
 
   tasks:
 
