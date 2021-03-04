@@ -21,7 +21,18 @@ steps:
       SUPER_PASS:
         from_secret: super_pass
 
-  - name: deploy
+  # - name: deploy
+  #   image: plugins/ansible:3
+  #   settings:
+  #     galaxy: /drone/src/roles/requirements.yaml
+  #     playbook: deploy.yaml
+  #     inventory: inventories/prod/hosts
+  #     private_key:
+  #       from_secret: ansible_private_key
+  #     vault_password:
+  #       from_secret: ansible_vault_password
+
+  - name: docker_deploy
     image: plugins/ansible:3
     settings:
       galaxy: /drone/src/roles/requirements.yaml
