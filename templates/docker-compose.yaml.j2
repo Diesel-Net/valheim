@@ -24,12 +24,5 @@ services:
     volumes:
       - {{ directories_files }}/{{ server.name }}/saves:/home/steam/.config/unity3d/IronGate/Valheim
       - {{ directories_files }}/{{ server.name }}/server:/home/steam/valheim
-    networks:
-      - {{ docker_network }}
 
 {% endfor %}
-
-networks:
-  {{ docker_network }}:
-    external:
-      name: {{ docker_network }}
