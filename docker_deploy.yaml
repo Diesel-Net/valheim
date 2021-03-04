@@ -16,6 +16,7 @@
       with_items: '{{ servers }}'
       loop_control:
         label: '{{ directories_files }}/{{ item.name }}/saves'
+      become: yes
 
     - name: Create all the server directories
       file:
@@ -29,6 +30,7 @@
       with_items: '{{ servers }}'
       loop_control:
         label: '{{ directories_files }}/{{ item.name }}/server'
+      become: yes
 
     - name: Render docker-compose.yaml
       template:
