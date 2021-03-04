@@ -1,0 +1,30 @@
+# docker-compose.yaml
+
+version: '3.7'
+services: 
+
+{% for server in servers %}
+
+  {{ server.name }}:
+    image: mbround18/valheim:latest
+    ports:
+      - {{ server.port }}:{{ server.port }}/udp
+      - {{ server.port + 1 }}:{{ server.port + 1 }}/udp
+      - {{ server.port + 2 }}:{{ server.port + 2 }}/udp
+    environment:
+      - PORT={{ server.port }}
+      - NAME="{{ server.name }}"
+      - WORLD="{{ server.name }}"
+      - PASSWORD="{{ server.password }}"
+      - TZ={{ timezone }}
+      - PUID={{ puid }}
+      - PGID={{ guid }}
+      - PUBLIC={{ server.public | int }}
+      - AUTO_UPDATE={{ server.auto_update | int }}
+      - AUTO_UPDATE_SCHEDULE="{{ server.auto_update_schedule }}"
+      # Note: backups set up externally with hypervisor
+    volumes:
+      - {{ directories_files }}/{{ server.name }}/saves:/home/steam/.config/unity3d/IronGate/Valheim
+      - {{ directories_files }}/{{ server.name }}/server:/home/steam/valheim
+
+{% endfor %}
