@@ -31,8 +31,9 @@
         label: '{{ directories_files }}/{{ item.name }}/server'
 
     - name: Render the admin lists
-      src: list.txt.j2
-      dest: '{{ directories_files }}/{{ item.name }}/saves/adminlist.txt'
+      template:
+        src: list.txt.j2
+        dest: '{{ directories_files }}/{{ item.name }}/saves/adminlist.txt'
       vars:
         players: '{{ item.admins }}'
       with_items: '{{ servers }}'
