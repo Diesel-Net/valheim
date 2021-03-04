@@ -1,3 +1,5 @@
+[![Build Status](https://drone-ci.hopto.org/api/badges/Diesel-Net/valheim/status.svg?ref=refs/heads/development)](https://drone-ci.hopto.org/Diesel-Net/valheim)
+
 # valheim
 Valheim Dedicated Game Server. Fully automated configuration and deployment of multiple valheim servers on docker swarm.
 
