@@ -17,9 +17,9 @@ services:
       - WORLD="{{ server.name }}"
       - PASSWORD="{{ server.password }}"
       - TZ={{ timezone }}
-      - PUBLIC={{ public | int }}
-      - AUTO_UPDATE={{ auto_update | int }}
-      - AUTO_UPDATE_SCHEDULE="{{ auto_update_schedule }}"
+      - PUBLIC={{ server.public | int }}
+      - AUTO_UPDATE={{ server.auto_update | int }}
+      - AUTO_UPDATE_SCHEDULE="{{ server.auto_update_schedule }}"
       # Note: backups set up externally with hypervisor
     volumes:
       - {{ directories_files }}/{{ server.name }}/saves:/home/steam/.config/unity3d/IronGate/Valheim
