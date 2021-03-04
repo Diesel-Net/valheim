@@ -2,9 +2,16 @@ steam_game_id: 896660
 
 install_dir: '{{ directories_home }}/valheim'
 
+timezone: America/Los_Angeles
+
+# Valheim server configurations
 servers:
   - name: TacoTimeNW
     port: 2456
+    public: no
+    auto_update: yes
+    auto_update_schedule: "30 5 * * *"
+    admins: []
     password: !vault |
       $ANSIBLE_VAULT;1.1;AES256
       66623666363365383337313335396633336166303830386634343039633462326662623565643439
@@ -14,7 +21,11 @@ servers:
       30323964386364333730616339366336353730353935326631643865653134396139
     
   - name: Lerland
-    port: 2458
+    port: 2459
+    public: no
+    auto_update: yes
+    auto_update_schedule: "30 5 * * *"
+    admins: []
     password: !vault |
       $ANSIBLE_VAULT;1.1;AES256
       39646362393233393735356166636534366330376637376561656164663864653338636130663364
