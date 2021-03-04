@@ -2,9 +2,6 @@
 
 - hosts: all
   strategy: free
-  roles:
-    - ubuntu_base
-
   tasks:
 
     - name: Install SteamCMD

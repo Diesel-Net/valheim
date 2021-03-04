@@ -24,7 +24,6 @@ steps:
   # - name: deploy
   #   image: plugins/ansible:3
   #   settings:
-  #     galaxy: /drone/src/roles/requirements.yaml
   #     playbook: deploy.yaml
   #     inventory: inventories/prod/hosts
   #     private_key:
@@ -35,7 +34,6 @@ steps:
   - name: docker_deploy
     image: plugins/ansible:3
     settings:
-      galaxy: /drone/src/roles/requirements.yaml
       playbook: docker_deploy.yaml
       inventory: inventories/prod/hosts
       private_key:

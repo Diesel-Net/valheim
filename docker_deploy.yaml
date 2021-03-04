@@ -2,10 +2,6 @@
 
 - hosts: all
   strategy: free
-  roles:
-    - ubuntu_base
-    - docker_host
-
   tasks:
 
     - name: Create all the save directories
@@ -25,7 +21,7 @@
       ufw:
         rule: allow
         port: "{{ server.port }}"
-        proto: any
+        proto: udp
       vars:
         server: '{{ item }}'
       with_items: '{{ servers }}'
@@ -37,7 +33,7 @@
       ufw:
         rule: allow
         port: "{{ server.port + 1 }}"
-        proto: any
+        proto: udp
       vars:
         server: '{{ item }}'
       with_items: '{{ servers }}'
@@ -49,7 +45,7 @@
       ufw:
         rule: allow
         port: "{{ server.port + 2 }}"
-        proto: any
+        proto: udp
       vars:
         server: '{{ item }}'
       with_items: '{{ servers }}'
