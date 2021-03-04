@@ -1,8 +1,6 @@
-steam_game_id: 896660
-
-install_dir: '{{ directories_home }}/valheim'
-
 timezone: America/Los_Angeles
+puid: 1001
+guid: 1001
 
 # Valheim server configurations
 servers:

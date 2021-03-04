@@ -4,61 +4,52 @@
   strategy: free
   tasks:
 
-    - name: Install SteamCMD
-      shell: >
-        add-apt-repository multiverse &&
-        dpkg --add-architecture i386 &&
-        apt update &&
-        apt install lib32gcc1 steamcmd
-      become: yes
-
-    - name: Create installation directory {{ install_dir }}
+    - name: Create all the save directories
       file:
-        path: '{{ install_dir }}'
+        path: '{{ directories_files }}/{{ server.name }}/saves'
         state: directory
         mode: '0755'
+        owner: automation
+        group: automation
+      vars:
+        server: '{{ item }}'
+      with_items: '{{ servers }}'
+      loop_control:
+        label: '{{ directories_files }}/{{ item.name }}/saves'
+      become: yes
 
-    - name: Render start_server.sh.j2 to {{ install_dir }}/start_server_XXXX.sh
+    - name: Create all the server directories
+      file:
+        path: '{{ directories_files }}/{{ server.name }}/server'
+        state: directory
+        mode: '0755'
+        owner: automation
+        group: automation
+      vars:
+        server: '{{ item }}'
+      with_items: '{{ servers }}'
+      loop_control:
+        label: '{{ directories_files }}/{{ item.name }}/server'
+      become: yes
+
+    - name: Render docker-compose.yaml
       template:
-        src: start_server.sh.j2
-        dest: '{{ install_dir }}/start_server_{{ item.name }}.sh'
-        mode: u=rwx,g=rwx,o=rx
-      vars:
-        server: '{{ item }}'
-      with_items: '{{ servers }}'
-      loop_control:
-        label: 'start_server_{{ item.name }}.sh'
+        src: docker-compose.yaml.j2
+        dest: '{{ directories_files }}/docker-compose.yaml'
 
-    - name: Render valheim.service.j2 to /etc/systemd/system/valheim_XXXX.service
-      template:
-        src: valheim.service.j2
-        dest: /etc/systemd/system/valheim_{{ item.name }}.service
-        mode: u=rwx,g=rwx,o=rx
-      vars:
-        server: '{{ item }}'
-      with_items: '{{ servers }}'
-      loop_control:
-        label: '{{ item.name }}'
-      become: yes
-
-    - name: Reload systemd
-      shell: systemctl daemon-reload
-      become: yes
-
-    - name: Start each service
-      shell: systemctl start valheim_{{ item.name }}
-      vars:
-        server: '{{ item }}'
-      with_items: '{{ servers }}'
-      loop_control:
-        label: '{{ item.name }}'
-      become: yes
+    - name: Run `docker stack deploy`
+      shell: >
+        docker stack deploy 
+        -c {{ directories_files }}/docker-compose.yaml 
+        {{ env }}_valheim
 
     - name: Allow server ports
       ufw:
         rule: allow
-        port: "{{ item.port }}"
-        proto: any
+        port: "{{ server.port }}"
+        proto: udp
+      vars:
+        server: '{{ item }}'
       with_items: '{{ servers }}'
       loop_control:
         label: '{{ item.port }}'
@@ -67,11 +58,25 @@
     - name: Allow server ports +1
       ufw:
         rule: allow
-        port: "{{ item.port + 1 }}"
-        proto: any
+        port: "{{ server.port + 1 }}"
+        proto: udp
+      vars:
+        server: '{{ item }}'
       with_items: '{{ servers }}'
       loop_control:
         label: '{{ item.port + 1 }}'
+      become: yes
+
+    - name: Allow server ports +2
+      ufw:
+        rule: allow
+        port: "{{ server.port + 2 }}"
+        proto: udp
+      vars:
+        server: '{{ item }}'
+      with_items: '{{ servers }}'
+      loop_control:
+        label: '{{ item.port + 2 }}'
       become: yes
 
     - name: Reload Firewall and enable at boot
@@ -80,11 +85,4 @@
         policy: deny
       become: yes
 
-    - name: Enable each service to start at boot
-      shell: systemctl enable valheim_{{ item.name }}
-      vars:
-        server: '{{ item }}'
-      with_items: '{{ servers }}'
-      loop_control:
-        label: '{{ item.name }}'
-      become: yes
+

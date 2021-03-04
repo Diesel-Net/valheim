@@ -8,10 +8,10 @@ clone:
 
 steps:
 
-  - name: docker_deploy
+  - name: deploy
     image: plugins/ansible:3
     settings:
-      playbook: docker_deploy.yaml
+      playbook: deploy.yaml
       inventory: inventories/prod/hosts
       private_key:
         from_secret: ansible_private_key
@@ -21,7 +21,4 @@ steps:
 trigger:
   branch:
     - development
-  #   - stable
-  # event:
-  #   - tag
 ...

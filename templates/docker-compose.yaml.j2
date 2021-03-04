@@ -17,6 +17,8 @@ services:
       - WORLD="{{ server.name }}"
       - PASSWORD="{{ server.password }}"
       - TZ={{ timezone }}
+      - PUID={{ puid }}
+      - PGID={{ guid }}
       - PUBLIC={{ server.public | int }}
       - AUTO_UPDATE={{ server.auto_update | int }}
       - AUTO_UPDATE_SCHEDULE="{{ server.auto_update_schedule }}"
