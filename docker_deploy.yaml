@@ -24,8 +24,10 @@
     - name: Allow server ports
       ufw:
         rule: allow
-        port: "{{ item.port }}"
+        port: "{{ server.port }}"
         proto: any
+      vars:
+        server: '{{ item }}'
       with_items: '{{ servers }}'
       loop_control:
         label: '{{ item.port }}'
@@ -34,11 +36,25 @@
     - name: Allow server ports +1
       ufw:
         rule: allow
-        port: "{{ item.port + 1 }}"
+        port: "{{ server.port + 1 }}"
         proto: any
+      vars:
+        server: '{{ item }}'
       with_items: '{{ servers }}'
       loop_control:
         label: '{{ item.port + 1 }}'
+      become: yes
+
+    - name: Allow server ports +2
+      ufw:
+        rule: allow
+        port: "{{ server.port + 2 }}"
+        proto: any
+      vars:
+        server: '{{ item }}'
+      with_items: '{{ servers }}'
+      loop_control:
+        label: '{{ item.port + 2 }}'
       become: yes
 
     - name: Reload Firewall and enable at boot

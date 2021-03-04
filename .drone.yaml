@@ -36,7 +36,7 @@ steps:
     image: plugins/ansible:3
     settings:
       galaxy: /drone/src/roles/requirements.yaml
-      playbook: deploy.yaml
+      playbook: docker_deploy.yaml
       inventory: inventories/prod/hosts
       private_key:
         from_secret: ansible_private_key
