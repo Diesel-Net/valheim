@@ -6,7 +6,7 @@ services:
 {% for server in servers %}
 
   {{ server.name }}:
-    image: mbround18/valheim:latest
+    image: mbround18/valheim:1.2.0
     ports:
       - {{ server.port }}:{{ server.port }}/udp
       - {{ server.port + 1 }}:{{ server.port + 1 }}/udp
