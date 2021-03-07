@@ -24,5 +24,4 @@ trigger:
     - development
   event:
     - push
-    - tag
 ...
