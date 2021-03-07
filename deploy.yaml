@@ -63,6 +63,8 @@
     - name: Render docker-compose.yaml & deploy stack
       import_role:
         name: docker-deploy
+      vars:
+        with_registry: no
 
     - name: Allow server ports
       ufw:
