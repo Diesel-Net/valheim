@@ -6,8 +6,12 @@ Valheim Dedicated Game Server. Fully automated configuration and deployment of m
 ## Requirements
 - Ansible 2.10+
 
-## Deploy
-Right now each environment is defined as an independent Virtual Machine (single-node swarm leaders)
+## Installing Dependencies
+```bash
+ansible-galaxy install -r roles/requirements.yaml -p ./roles --force
+```
+
+## Deploy to Docker Swarm
 ```bash
 ansible-playbook deploy.yaml -i inventories/prod/hosts --vault-id ~/.tokens/master_id
 ```
