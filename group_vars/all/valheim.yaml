@@ -4,6 +4,8 @@ guid: 1001
 
 # Valheim server configurations
 servers:
+# note: Each server uses (+2) more ports above the connect port, so
+# make sure to space them out appropriately
 
   - name: TacoTimeNW
     world: Dedicated
