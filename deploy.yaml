@@ -60,16 +60,9 @@
       loop_control:
         label: '{{ directories_files }}/{{ item.name }}/saves/permittedlist.txt'
 
-    - name: Render docker-compose.yaml
-      template:
-        src: docker-compose.yaml.j2
-        dest: '{{ directories_files }}/docker-compose.yaml'
-
-    - name: Run `docker stack deploy`
-      shell: >
-        docker stack deploy 
-        -c {{ directories_files }}/docker-compose.yaml 
-        {{ env }}_valheim
+    - name: Render docker-compose.yaml & deploy stack
+      import_role:
+        name: docker-deploy
 
     - name: Allow server ports
       ufw:
