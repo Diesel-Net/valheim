@@ -1,9 +1,9 @@
 all:
   children:
 
-    leader:
+    games:
       hosts:
-        valheim.diesel.net:
+        games.diesel.net:
 
   vars:
     ansible_user: automation
