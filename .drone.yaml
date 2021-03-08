@@ -13,7 +13,7 @@ steps:
     settings:
       playbook: deploy.yaml
       galaxy: roles/requirements.yaml
-      inventory: inventories/prod/hosts
+      inventory: inventories/production/hosts
       private_key:
         from_secret: ansible_private_key
       vault_password:
