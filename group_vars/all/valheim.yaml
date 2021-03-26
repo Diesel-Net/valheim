@@ -52,6 +52,7 @@ servers:
     auto_update_schedule: "30 5 * * *"
     admins:
       - '76561198011336370' # softtacowithbeef
+      - '76561198110347301' # fabio
     banned: []
     permitted: []
     password: !vault |
@@ -70,6 +71,7 @@ servers:
     auto_update_schedule: "30 5 * * *"
     admins:
       - '76561198011336370' # softtacowithbeef
+      - '76561198110554954' # nick
     banned: []
     permitted: []
     password: !vault |
