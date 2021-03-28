@@ -17,8 +17,8 @@ services:
       - WORLD_NAME={{ server.world }}
       - SERVER_PASS={{ server.password }}
       - TZ={{ server.timezone }}
-      - ADMIN_LIST_IDS="{{ server.admins | join(' ')}}"
-      - BANNED_LIST_IDS="{{ server.banned | join(' ')}}"
+      - ADMIN_LIST_IDS={{ server.admins | join(' ')}}
+      - BANNED_LIST_IDS={{ server.banned | join(' ')}}
       - SERVER_PUBLIC={{ server.public | bool | string | lower }}
       - UPDATE_CRON={{ server.update_cron }}
       - UPDATE_IF_IDLE={{ server.update_if_idle | bool | string | lower }}
