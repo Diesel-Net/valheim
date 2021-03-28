@@ -25,6 +25,11 @@ services:
       - RESTART_CRON={{ server.restart_cron }}
       - RESTART_IF_IDLE={{ server.restart_if_idle | bool | string | lower }}
       - BACKUPS=false # backups set up externally with hypervisor
+
+      # Discord integration
+      - DISCORD_WEBHOOK={{ discord_webhook_url }}
+      - DISCORD_MESSAGE=Starting Valheim server $$SERVER_NAME
+      - 'PRE_BOOTSTRAP_HOOK=curl -sfSL -X POST -H "Content-Type: application/json" -d "{\"username\":\"Valheim\",\"content\":\"$$(eval echo $$DISCORD_MESSAGE)\"}" "$$DISCORD_WEBHOOK"'
     volumes:
       - {{ directories_files }}/{{ server.name }}/saves:/config
       - {{ directories_files }}/{{ server.name }}/server:/opt/valheim
