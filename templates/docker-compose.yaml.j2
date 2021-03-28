@@ -13,9 +13,9 @@ services:
       - {{ server.port + 2 }}:{{ server.port + 2 }}/udp
     environment:
       - SERVER_PORT={{ server.port }}
-      - SERVER_NAME="{{ server.name }}"
-      - WORLD_NAME="{{ server.world }}"
-      - SERVER_PASS="{{ server.password }}"
+      - SERVER_NAME={{ server.name }}
+      - WORLD_NAME={{ server.world }}
+      - SERVER_PASS={{ server.password }}
       - TZ={{ server.timezone }}
       - ADMIN_LIST_IDS="{{ server.admins | join(' ')}}"
       - BANNED_LIST_IDS="{{ server.banned | join(' ')}}"
