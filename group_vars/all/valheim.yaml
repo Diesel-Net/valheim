@@ -18,7 +18,6 @@ servers:
     admins: 
       - '76561198011336370' # softtacowithbeef
     banned: []
-    permitted: []
     password: !vault |
       $ANSIBLE_VAULT;1.1;AES256
       66623666363365383337313335396633336166303830386634343039633462326662623565643439
@@ -40,7 +39,6 @@ servers:
     admins:
       - '76561197994970408' # ler
     banned: []
-    permitted: []
     password: !vault |
       $ANSIBLE_VAULT;1.1;AES256
       39646362393233393735356166636534366330376637376561656164663864653338636130663364
@@ -84,7 +82,6 @@ servers:
       - '76561198011336370' # softtacowithbeef
       - '76561198110554954' # nick
     banned: []
-    permitted: []
     password: !vault |
       $ANSIBLE_VAULT;1.1;AES256
       33393032306136613236356562613134633165333661376439376138303566626333383366353163

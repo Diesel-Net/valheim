@@ -12,19 +12,19 @@ services:
       - {{ server.port + 1 }}:{{ server.port + 1 }}/udp
       - {{ server.port + 2 }}:{{ server.port + 2 }}/udp
     environment:
-      - PUID={{ puid }}
-      - PGID={{ guid }}
       - SERVER_PORT={{ server.port }}
       - SERVER_NAME="{{ server.name }}"
       - WORLD_NAME="{{ server.world }}"
       - SERVER_PASS="{{ server.password }}"
-      - TZ={{ server.timezone }}
+      - TZ="{{ server.timezone }}"
+      - ADMIN_LIST_IDS="{{ admins | join(' ')}}"
+      - BANNED_LIST_IDS="{{ banned | join(' ')}}"
       - SERVER_PUBLIC={{ server.public | bool | string | lower }}
-      - UPDATE_CRON={{ server.update_cron }}
+      - UPDATE_CRON="{{ server.update_cron }}"
       - UPDATE_IF_IDLE={{ server.update_if_idle | bool | string | lower }}
-      - RESTART_CRON={{ server.restart_cron }}
+      - RESTART_CRON="{{ server.restart_cron }}"
       - RESTART_IF_IDLE={{ server.restart_if_idle | bool | string | lower }}
-      - BACKUPS='false' # backups set up externally with hypervisor
+      - BACKUPS=false # backups set up externally with hypervisor
     volumes:
       - {{ directories_files }}/{{ server.name }}/saves:/config
       - {{ directories_files }}/{{ server.name }}/server:/opt/valheim
