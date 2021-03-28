@@ -1,6 +1,5 @@
-timezone: America/Los_Angeles
-puid: 1001
-guid: 1001
+puid: 1001 # automation
+guid: 1001 # automation
 
 # Valheim server configurations
 servers:
@@ -11,8 +10,11 @@ servers:
     world: Dedicated
     port: 2456
     public: no
-    auto_update: yes
-    auto_update_schedule: "30 5 * * *"
+    timezone: America/Los_Angeles
+    update_cron: "*/15 * * * *" # check every 15 minutes
+    update_if_idle: yes # only if no players connected
+    restart_cron: "30 5 * * *" # 5:30 am
+    restart_if_idle: yes # only if no players connected
     admins: 
       - '76561198011336370' # softtacowithbeef
     banned: []
@@ -30,8 +32,11 @@ servers:
     world: Lerland
     port: 2459
     public: no
-    auto_update: yes
-    auto_update_schedule: "30 5 * * *"
+    timezone: America/Los_Angeles
+    update_cron: "*/15 * * * *" # check every 15 minutes
+    update_if_idle: yes # only if no players connected
+    restart_cron: "30 5 * * *" # 5:30 am
+    restart_if_idle: yes # only if no players connected
     admins:
       - '76561197994970408' # ler
     banned: []
@@ -48,8 +53,11 @@ servers:
     world: Beccadaelphia
     port: 2462
     public: no
-    auto_update: yes
-    auto_update_schedule: "30 5 * * *"
+    timezone: America/Los_Angeles
+    update_cron: "*/15 * * * *" # check every 15 minutes
+    update_if_idle: yes # only if no players connected
+    restart_cron: "30 5 * * *" # 5:30 am
+    restart_if_idle: yes # only if no players connected
     admins:
       - '76561198011336370' # softtacowithbeef
       - '76561198110347301' # fabio
@@ -67,8 +75,11 @@ servers:
     world: coachosinko
     port: 2465
     public: no
-    auto_update: yes
-    auto_update_schedule: "30 5 * * *"
+    timezone: America/Los_Angeles
+    update_cron: "*/15 * * * *" # check every 15 minutes
+    update_if_idle: yes # only if no players connected
+    restart_cron: "30 5 * * *" # 5:30 am
+    restart_if_idle: yes # only if no players connected
     admins:
       - '76561198011336370' # softtacowithbeef
       - '76561198110554954' # nick
