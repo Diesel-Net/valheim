@@ -28,8 +28,10 @@ services:
 
       # Discord integration
       - DISCORD_WEBHOOK={{ discord_webhook_url }}
-      - DISCORD_MESSAGE=Starting Valheim server $$SERVER_NAME
-      - 'PRE_BOOTSTRAP_HOOK=curl -sfSL -X POST -H "Content-Type: application/json" -d "{\"username\":\"Valheim\",\"content\":\"$$(eval echo $$DISCORD_MESSAGE)\"}" "$$DISCORD_WEBHOOK"'
+      - DISCORD_BOOT_MESSAGE=Starting Valheim server $$SERVER_NAME
+      - DISCORD_RESTART_MESSAGE=Restarting Valheim server $$SERVER_NAME in one minute!
+      - 'PRE_BOOTSTRAP_HOOK=curl -sfSL -X POST -H "Content-Type: application/json" -d "{\"username\":\"Valheim\",\"content\":\"$$(eval echo $$DISCORD_BOOT_MESSAGE)\"}" "$$DISCORD_WEBHOOK"'
+      - 'PRE_RESTART_HOOK=curl -sfSL -X POST -H "Content-Type: application/json" -d "{\"username\":\"Valheim\",\"content\":\"$$DISCORD_RESTART_MESSAGE\"}" "$$DISCORD_WEBHOOK" && sleep 60'
     volumes:
       - {{ directories_files }}/{{ server.name }}/saves:/config
       - {{ directories_files }}/{{ server.name }}/server:/opt/valheim
