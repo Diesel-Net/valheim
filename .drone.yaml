@@ -11,9 +11,9 @@ steps:
   - name: deploy
     image: plugins/ansible:3
     settings:
-      playbook: deploy.yaml
-      galaxy: roles/requirements.yaml
-      inventory: inventories/production/hosts
+      playbook: .ansible/deploy.yaml
+      galaxy: .ansible/roles/requirements.yaml
+      inventory: .ansible/inventories/production/hosts
       private_key:
         from_secret: ansible_private_key
       vault_password:

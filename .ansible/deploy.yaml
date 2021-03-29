@@ -9,56 +9,58 @@
         path: '{{ directories_files }}/{{ server.name }}/saves'
         state: directory
         mode: '0755'
-        owner: automation
-        group: automation
+        owner: root
+        group: root
       vars:
         server: '{{ item }}'
       with_items: '{{ servers }}'
       loop_control:
         label: '{{ directories_files }}/{{ item.name }}/saves'
+      become: yes
 
     - name: Create all the server directories
       file:
         path: '{{ directories_files }}/{{ server.name }}/server'
         state: directory
         mode: '0755'
-        owner: automation
-        group: automation
+        owner: root
+        group: root
       vars:
         server: '{{ item }}'
       with_items: '{{ servers }}'
       loop_control:
         label: '{{ directories_files }}/{{ item.name }}/server'
+      become: yes
 
-    - name: Render the admin lists
-      template:
-        src: list.txt.j2
-        dest: '{{ directories_files }}/{{ item.name }}/saves/adminlist.txt'
-      vars:
-        players: '{{ item.admins }}'
-      with_items: '{{ servers }}'
-      loop_control:
-        label: '{{ directories_files }}/{{ item.name }}/saves/adminlist.txt'
+    # - name: Render the admin lists
+    #   template:
+    #     src: list.txt.j2
+    #     dest: '{{ directories_files }}/{{ item.name }}/saves/adminlist.txt'
+    #   vars:
+    #     players: '{{ item.admins }}'
+    #   with_items: '{{ servers }}'
+    #   loop_control:
+    #     label: '{{ directories_files }}/{{ item.name }}/saves/adminlist.txt'
 
-    - name: Render the banned lists
-      template:
-        src: list.txt.j2
-        dest: '{{ directories_files }}/{{ item.name }}/saves/bannedlist.txt'
-      vars:
-        players: '{{ item.banned }}'
-      with_items: '{{ servers }}'
-      loop_control:
-        label: '{{ directories_files }}/{{ item.name }}/saves/bannedlist.txt'
+    # - name: Render the banned lists
+    #   template:
+    #     src: list.txt.j2
+    #     dest: '{{ directories_files }}/{{ item.name }}/saves/bannedlist.txt'
+    #   vars:
+    #     players: '{{ item.banned }}'
+    #   with_items: '{{ servers }}'
+    #   loop_control:
+    #     label: '{{ directories_files }}/{{ item.name }}/saves/bannedlist.txt'
 
-    - name: Render the permitted lists
-      template:
-        src: list.txt.j2
-        dest: '{{ directories_files }}/{{ item.name }}/saves/permittedlist.txt'
-      vars:
-        players: '{{ item.permitted }}'
-      with_items: '{{ servers }}'
-      loop_control:
-        label: '{{ directories_files }}/{{ item.name }}/saves/permittedlist.txt'
+    # - name: Render the permitted lists
+    #   template:
+    #     src: list.txt.j2
+    #     dest: '{{ directories_files }}/{{ item.name }}/saves/permittedlist.txt'
+    #   vars:
+    #     players: '{{ item.permitted }}'
+    #   with_items: '{{ servers }}'
+    #   loop_control:
+    #     label: '{{ directories_files }}/{{ item.name }}/saves/permittedlist.txt'
 
     - name: Render docker-compose.yaml & deploy stack
       import_role:

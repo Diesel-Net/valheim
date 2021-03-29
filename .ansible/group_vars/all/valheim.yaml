@@ -1,6 +1,18 @@
-timezone: America/Los_Angeles
-puid: 1001
-guid: 1001
+puid: 1001 # automation
+guid: 1001 # automation
+
+discord_webhook_url: !vault |
+  $ANSIBLE_VAULT;1.1;AES256
+  62333661626565643733333431366130653566633732373436393832353932356438663137656161
+  6132633164613632333036656633653337336264663537370a623666383530383466623235613039
+  31386266353638393133616261633033356236663863353262666237363566653463316164636665
+  6132616532656436630a656639306161326663636636316465363539626535313866323430306438
+  31333838386465353866616266646631306631643738393437333837646631646131656135326466
+  32323831383065336137643531393039623430363564363139386535316534363630376233636432
+  66373165643263623133643032653162633231643064376564656232663639366162323132316561
+  64366538623161383266626637613633646236333838353766346163356662656262613764303634
+  34663866633830666533653439346432393233613663353434643662376430666431363763343138
+  3234326466646234623436366561336265336666636266346565
 
 # Valheim server configurations
 servers:
@@ -11,12 +23,14 @@ servers:
     world: Dedicated
     port: 2456
     public: no
-    auto_update: yes
-    auto_update_schedule: "30 5 * * *"
+    timezone: America/Los_Angeles
+    update_cron: "*/15 * * * *" # check every 15 minutes
+    update_if_idle: yes # only if no players connected
+    restart_cron: "30 5 * * *" # 5:30 am
+    restart_if_idle: yes # only if no players connected
     admins: 
       - '76561198011336370' # softtacowithbeef
     banned: []
-    permitted: []
     password: !vault |
       $ANSIBLE_VAULT;1.1;AES256
       66623666363365383337313335396633336166303830386634343039633462326662623565643439
@@ -30,12 +44,14 @@ servers:
     world: Lerland
     port: 2459
     public: no
-    auto_update: yes
-    auto_update_schedule: "30 5 * * *"
+    timezone: America/Los_Angeles
+    update_cron: "*/15 * * * *" # check every 15 minutes
+    update_if_idle: yes # only if no players connected
+    restart_cron: "30 5 * * *" # 5:30 am
+    restart_if_idle: yes # only if no players connected
     admins:
       - '76561197994970408' # ler
     banned: []
-    permitted: []
     password: !vault |
       $ANSIBLE_VAULT;1.1;AES256
       39646362393233393735356166636534366330376637376561656164663864653338636130663364
@@ -48,8 +64,11 @@ servers:
     world: Beccadaelphia
     port: 2462
     public: no
-    auto_update: yes
-    auto_update_schedule: "30 5 * * *"
+    timezone: America/Los_Angeles
+    update_cron: "*/15 * * * *" # check every 15 minutes
+    update_if_idle: yes # only if no players connected
+    restart_cron: "30 5 * * *" # 5:30 am
+    restart_if_idle: yes # only if no players connected
     admins:
       - '76561198011336370' # softtacowithbeef
       - '76561198110347301' # fabio
@@ -67,13 +86,15 @@ servers:
     world: coachosinko
     port: 2465
     public: no
-    auto_update: yes
-    auto_update_schedule: "30 5 * * *"
+    timezone: America/Los_Angeles
+    update_cron: "*/15 * * * *" # check every 15 minutes
+    update_if_idle: yes # only if no players connected
+    restart_cron: "30 5 * * *" # 5:30 am
+    restart_if_idle: yes # only if no players connected
     admins:
       - '76561198011336370' # softtacowithbeef
       - '76561198110554954' # nick
     banned: []
-    permitted: []
     password: !vault |
       $ANSIBLE_VAULT;1.1;AES256
       33393032306136613236356562613134633165333661376439376138303566626333383366353163
