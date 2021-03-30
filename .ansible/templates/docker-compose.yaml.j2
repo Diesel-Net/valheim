@@ -11,7 +11,7 @@ services:
       - {{ server.port }}:{{ server.port }}/udp
       - {{ server.port + 1 }}:{{ server.port + 1 }}/udp
       - {{ server.port + 2 }}:{{ server.port + 2 }}/udp
-    env-file:
+    env_file:
       - {{ directories_files }}/{{ server.name }}/.env
     volumes:
       - {{ directories_files }}/{{ server.name }}/saves:/config
