@@ -32,35 +32,15 @@
         label: '{{ directories_files }}/{{ item.name }}/server'
       become: yes
 
-    # - name: Render the admin lists
-    #   template:
-    #     src: list.txt.j2
-    #     dest: '{{ directories_files }}/{{ item.name }}/saves/adminlist.txt'
-    #   vars:
-    #     players: '{{ item.admins }}'
-    #   with_items: '{{ servers }}'
-    #   loop_control:
-    #     label: '{{ directories_files }}/{{ item.name }}/saves/adminlist.txt'
-
-    # - name: Render the banned lists
-    #   template:
-    #     src: list.txt.j2
-    #     dest: '{{ directories_files }}/{{ item.name }}/saves/bannedlist.txt'
-    #   vars:
-    #     players: '{{ item.banned }}'
-    #   with_items: '{{ servers }}'
-    #   loop_control:
-    #     label: '{{ directories_files }}/{{ item.name }}/saves/bannedlist.txt'
-
-    # - name: Render the permitted lists
-    #   template:
-    #     src: list.txt.j2
-    #     dest: '{{ directories_files }}/{{ item.name }}/saves/permittedlist.txt'
-    #   vars:
-    #     players: '{{ item.permitted }}'
-    #   with_items: '{{ servers }}'
-    #   loop_control:
-    #     label: '{{ directories_files }}/{{ item.name }}/saves/permittedlist.txt'
+    - name: Render the .env files
+      template:
+        src: .env.j2
+        dest: '{{ directories_files }}/{{ server.name }}/.env'
+      vars:
+        server: '{{ item }}'
+      with_items: '{{ servers }}'
+      loop_control:
+        label: '{{ directories_files }}/{{ item.name }}/.env'
 
     - name: Render docker-compose.yaml & deploy stack
       import_role:

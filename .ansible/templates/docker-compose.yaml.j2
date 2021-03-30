@@ -11,30 +11,8 @@ services:
       - {{ server.port }}:{{ server.port }}/udp
       - {{ server.port + 1 }}:{{ server.port + 1 }}/udp
       - {{ server.port + 2 }}:{{ server.port + 2 }}/udp
-    environment:
-      - SERVER_PORT={{ server.port }}
-      - SERVER_NAME={{ server.name }}
-      - WORLD_NAME={{ server.world }}
-      - SERVER_PASS={{ server.password }}
-      - TZ={{ server.timezone }}
-      - ADMIN_LIST_IDS={{ server.admins | join(' ')}}
-      - BANNED_LIST_IDS={{ server.banned | join(' ')}}
-      - SERVER_PUBLIC={{ server.public | bool | string | lower }}
-      - UPDATE_CRON={{ server.update_cron }}
-      - UPDATE_IF_IDLE={{ server.update_if_idle | bool | string | lower }}
-      - RESTART_CRON={{ server.restart_cron }}
-      - RESTART_IF_IDLE={{ server.restart_if_idle | bool | string | lower }}
-      - BACKUPS=false # backups set up externally with hypervisor
-
-      # Discord integration
-      - DISCORD_WEBHOOK={{ discord_webhook_url }}
-      - DISCORD_BOOT_MESSAGE=Starting Valheim server $$SERVER_NAME
-      - DISCORD_RESTART_MESSAGE=Restarting Valheim server $$SERVER_NAME in one minute!
-      - 'PRE_BOOTSTRAP_HOOK=curl -sfSL -X POST -H "Content-Type: application/json" -d "{\"username\":\"Valheim\",\"content\":\"$$(eval echo $$DISCORD_BOOT_MESSAGE)\"}" "$$DISCORD_WEBHOOK"'
-      - 'PRE_RESTART_HOOK=curl -sfSL -X POST -H "Content-Type: application/json" -d "{\"username\":\"Valheim\",\"content\":\"$$DISCORD_RESTART_MESSAGE\"}" "$$DISCORD_WEBHOOK" && sleep 60'
-
-      - VALHEIM_LOG_FILTER_CONTAINS_Spawned=Got character ZDOID from
-      - 'ON_VALHEIM_LOG_FILTER_CONTAINS_Spawned={ read l; l=$${l//*ZDOID from /}; l=$${l// :*/}; msg="Player $$l spawned into $$SERVER_NAME"; curl -sfSL -X POST -H "Content-Type: application/json" -d "{\"username\":\"Valheim\",\"content\":\"$$msg\"}" "$$DISCORD_WEBHOOK"; }'
+    env-file:
+      - {{ directories_files }}/{{ server.name }}/.env
     volumes:
       - {{ directories_files }}/{{ server.name }}/saves:/config
       - {{ directories_files }}/{{ server.name }}/server:/opt/valheim
