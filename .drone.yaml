@@ -10,10 +10,12 @@ steps:
 
   - name: deploy
     image: plugins/ansible:3
+    environment:
+      ANSIBLE_CONFIG: .ansible/ansible.cfg
     settings:
       playbook: .ansible/deploy.yaml
       galaxy: .ansible/roles/requirements.yaml
-      inventory: .ansible/inventories/production/hosts
+      inventory: .ansible/inventory/production/hosts
       private_key:
         from_secret: ansible_private_key
       vault_password:
@@ -21,7 +23,7 @@ steps:
 
 trigger:
   branch:
-    - development
+    - stable
   event:
     - push
 ...
