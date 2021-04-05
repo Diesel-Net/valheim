@@ -1,6 +1,8 @@
 puid: 1001 # automation
 guid: 1001 # automation
 
+domain: valheim.diesel.net
+
 discord_webhook_url: !vault |
   $ANSIBLE_VAULT;1.1;AES256
   62333661626565643733333431366130653566633732373436393832353932356438663137656161
