@@ -6,6 +6,19 @@
 
     - name: Create all the save directories
       file:
+        path: '{{ directories_files }}/{{ server.name }}'
+        state: directory
+        mode: '0755'
+        owner: automation
+        group: automation
+      vars:
+        server: '{{ item }}'
+      with_items: '{{ servers }}'
+      loop_control:
+        label: '{{ directories_files }}/{{ item.name }}'
+
+    - name: Create all the save directories
+      file:
         path: '{{ directories_files }}/{{ server.name }}/saves'
         state: directory
         mode: '0755'
@@ -42,11 +55,8 @@
       loop_control:
         label: '{{ directories_files }}/{{ item.name }}/.env'
 
-    - name: Render docker-compose.yaml & deploy stack
-      import_role:
-        name: docker-deploy
-      vars:
-        with_registry: no
+    - import_role:
+        name: docker_deploy
 
     - name: Allow server ports
       ufw:
