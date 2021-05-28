@@ -2,11 +2,21 @@
 
 - hosts: all
   strategy: free
+  roles:
+    - common
   tasks:
 
-    - name: Create all the save directories
+    - include_role:
+        name: common
+        tasks_from: make_config_dir
+
+    - include_role:
+        name: common
+        tasks_from: make_data_dir
+
+    - name: Create and set permissions on all the top-level directories
       file:
-        path: '{{ directories_files }}/{{ server.name }}'
+        path: '{{ data_dir }}/{{ server.name }}'
         state: directory
         mode: '0755'
         owner: automation
@@ -15,11 +25,11 @@
         server: '{{ item }}'
       with_items: '{{ servers }}'
       loop_control:
-        label: '{{ directories_files }}/{{ item.name }}'
+        label: '{{ data_dir }}/{{ item.name }}'
 
     - name: Create all the save directories
       file:
-        path: '{{ directories_files }}/{{ server.name }}/saves'
+        path: '{{ data_dir }}/{{ server.name }}/saves'
         state: directory
         mode: '0755'
         owner: root
@@ -28,12 +38,12 @@
         server: '{{ item }}'
       with_items: '{{ servers }}'
       loop_control:
-        label: '{{ directories_files }}/{{ item.name }}/saves'
+        label: '{{ data_dir }}/{{ item.name }}/saves'
       become: yes
 
     - name: Create all the server directories
       file:
-        path: '{{ directories_files }}/{{ server.name }}/server'
+        path: '{{ data_dir }}/{{ server.name }}/server'
         state: directory
         mode: '0755'
         owner: root
@@ -42,18 +52,18 @@
         server: '{{ item }}'
       with_items: '{{ servers }}'
       loop_control:
-        label: '{{ directories_files }}/{{ item.name }}/server'
+        label: '{{ data_dir }}/{{ item.name }}/server'
       become: yes
 
     - name: Render the .env files
       template:
         src: .env.j2
-        dest: '{{ directories_files }}/{{ server.name }}/.env'
+        dest: '{{ config_dir }}/{{ server.name }}/.env'
       vars:
         server: '{{ item }}'
       with_items: '{{ servers }}'
       loop_control:
-        label: '{{ directories_files }}/{{ item.name }}/.env'
+        label: '{{ config_dir }}/{{ item.name }}/.env'
 
     - import_role:
         name: docker_deploy
