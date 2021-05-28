@@ -65,8 +65,9 @@
       loop_control:
         label: '{{ config_dir }}/{{ item.name }}/.env'
 
-    - import_role:
-        name: docker_deploy
+    - include_role:
+        name: docker
+        tasks_from: stack_deploy
 
     - name: Allow server ports
       ufw:
