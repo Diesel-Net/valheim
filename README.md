@@ -1,4 +1,4 @@
-[![Build Status](https://drone.kiwi-labs.net/api/badges/Diesel-Net/valheim/status.svg?ref=refs/heads/development)](https://drone.kiwi-labs.net/Diesel-Net/valheim)
+[![Build Status](https://drone.kiwi-labs.net/api/badges/Diesel-Net/valheim/status.svg?ref=refs/heads/stable)](https://drone.kiwi-labs.net/Diesel-Net/valheim)
 
 # valheim
 Valheim dedicated game servers on docker swarm. Special thanks to Github user [lloesche](https://github.com/lloesche) for providing a fantastic docker image to work from.
