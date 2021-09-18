@@ -1,14 +1,14 @@
 ---
 kind: pipeline
 type: docker
-name: development pipeline
+name: Install valheim Servers
 
 clone:
   depth: 1
 
 steps:
 
-  - name: deploy
+  - name: deploy (test servers)
     image: plugins/ansible:3
     environment:
       ANSIBLE_CONFIG: .ansible/ansible.cfg
@@ -20,24 +20,13 @@ steps:
         from_secret: automation_id_rsa
       vault_password:
         from_secret: ansible_vault_password
+    when:
+      branch:
+        - development
+      event:
+        - push
 
-trigger:
-  branch:
-    - development
-  event:
-    - push
-
----
-kind: pipeline
-type: docker
-name: production pipeline
-
-clone:
-  depth: 1
-
-steps:
-
-  - name: deploy
+  - name: deploy (prod servers)
     image: plugins/ansible:3
     environment:
       ANSIBLE_CONFIG: .ansible/ansible.cfg
@@ -49,9 +38,15 @@ steps:
         from_secret: automation_id_rsa
       vault_password:
         from_secret: ansible_vault_password
+    when:
+      branch:
+        - stable
+      event:
+        - push
 
 trigger:
   branch:
+    - development
     - stable
   event:
     - push
